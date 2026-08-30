@@ -1,0 +1,17 @@
+{
+    "name": "libbpg",
+    "description": "BPG image decoder",
+    "filters":["bpgdec"],
+    "help": "This filter decodes BPG (\"Better Portable Graphics\") images using libbpg's own bundled HEVC decoder.",
+    "support": [
+        "image"
+    ],
+    "sources":"https://bevara.ddns.net/sources/libbpg.accessor",
+    "filter_source":{
+        "bpgdec" : "dec_bpg.c"
+    },
+    "extension":{
+      "bpg" : "img"
+    },
+    "licence_required":false
+}
