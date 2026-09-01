@@ -28,8 +28,6 @@ static GF_Err bpgdec_configure_pid(GF_Filter *filter, GF_FilterPid *pid, Bool is
 {
 	GF_BPGDecCtx *ctx = (GF_BPGDecCtx *)gf_filter_get_udta(filter);
 
-	GF_LOG(GF_LOG_ERROR, GF_LOG_CODEC, ("[BPGDec] DEBUG_CONFIGURE_PID called, is_remove=%d\n", is_remove));
-
 	if (is_remove)
 	{
 		if (ctx->opid)
@@ -41,11 +39,7 @@ static GF_Err bpgdec_configure_pid(GF_Filter *filter, GF_FilterPid *pid, Bool is
 		return GF_OK;
 	}
 	if (!gf_filter_pid_check_caps(pid))
-	{
-		GF_LOG(GF_LOG_ERROR, GF_LOG_CODEC, ("[BPGDec] DEBUG_CHECK_CAPS_FAILED\n"));
 		return GF_NOT_SUPPORTED;
-	}
-	GF_LOG(GF_LOG_ERROR, GF_LOG_CODEC, ("[BPGDec] DEBUG_CHECK_CAPS_OK\n"));
 
 	ctx->ipid = pid;
 	gf_filter_pid_set_framing_mode(pid, GF_TRUE);
@@ -57,6 +51,11 @@ static GF_Err bpgdec_configure_pid(GF_Filter *filter, GF_FilterPid *pid, Bool is
 
 	gf_filter_pid_set_property(ctx->opid, GF_PROP_PID_STREAM_TYPE, &PROP_UINT(GF_STREAM_VISUAL));
 	gf_filter_pid_set_property(ctx->opid, GF_PROP_PID_CODECID, &PROP_UINT(GF_CODECID_RAW));
+	/* PIXFMT must be set here, not just after decode in process(): under
+	 * solver_1, GPAC's writegen output resolution needs it on the PID
+	 * before any data flows, or it fails with "No suitable filter to
+	 * adapt caps" even though the value gets overwritten (RGB vs RGBA,
+	 * once has_alpha is known) once decoding actually starts. */
 	gf_filter_pid_set_property(ctx->opid, GF_PROP_PID_PIXFMT, &PROP_UINT(GF_PIXEL_RGB));
 
 	return GF_OK;
@@ -194,7 +193,7 @@ GF_FilterRegister BPGDecoderRegister = {
 	.finalize = bpgdec_finalize,
 };
 
-const GF_FilterRegister * EMSCRIPTEN_KEEPALIVE dynCall_bpgdec_register(GF_FilterSession *session)
+const GF_FilterRegister * EMSCRIPTEN_KEEPALIVE bpgdec_register(GF_FilterSession *session)
 {
 	return &BPGDecoderRegister;
 }
@@ -202,5 +201,5 @@ const GF_FilterRegister * EMSCRIPTEN_KEEPALIVE dynCall_bpgdec_register(GF_Filter
 #include "filter_register.h"
 __attribute__((constructor))
 void register_bpgdec(void) {
-    gf_filter_auto_register("bpgdec", dynCall_bpgdec_register);
+    gf_filter_auto_register("bpgdec", bpgdec_register);
 }
