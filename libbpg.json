@@ -13,6 +13,10 @@
     "extension":{
       "bpg" : "img"
     },
-    "licence_required":false,
-    "using": ["solver_minimal_1", "solver_1"]
+    "using": ["solver_minimal_1", "solver_1"],
+    "patents": {
+        "status": "licence-required",
+        "note": "BPG is HEVC intra coding",
+        "checked": "2026-10-16"
+    }
 }
