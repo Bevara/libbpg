@@ -52,7 +52,7 @@ static GF_Err bpgdec_configure_pid(GF_Filter *filter, GF_FilterPid *pid, Bool is
 	gf_filter_pid_set_property(ctx->opid, GF_PROP_PID_STREAM_TYPE, &PROP_UINT(GF_STREAM_VISUAL));
 	gf_filter_pid_set_property(ctx->opid, GF_PROP_PID_CODECID, &PROP_UINT(GF_CODECID_RAW));
 	/* PIXFMT must be set here, not just after decode in process(): under
-	 * solver_1, GPAC's writegen output resolution needs it on the PID
+	 * mm_solver_1.0.1, GPAC's writegen output resolution needs it on the PID
 	 * before any data flows, or it fails with "No suitable filter to
 	 * adapt caps" even though the value gets overwritten (RGB vs RGBA,
 	 * once has_alpha is known) once decoding actually starts. */
