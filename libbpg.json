@@ -2,19 +2,28 @@
     "name": "libbpg",
     "version": "1.0.1",
     "description": "BPG image decoder",
-    "filters":["bpgdec"],
+    "filters": [
+        "bpgdec"
+    ],
     "help": "This filter decodes BPG (\"Better Portable Graphics\") images using libbpg's own bundled HEVC decoder.",
     "support": [
         "image"
     ],
-    "sources":"https://bevara.ddns.net/sources/libbpg.accessor",
-    "filter_source":{
-        "bpgdec" : "dec_bpg.c"
+    "sources": "https://bevara.ddns.net/sources/libbpg.accessor",
+    "filter_source": {
+        "bpgdec": "dec_bpg.c"
     },
-    "extension":{
-      "bpg" : "img"
+    "extension": {
+        "bpg": "img"
     },
-    "using": ["mm_solver_minimal_1.0.1", "mm_solver_1.0.1", "mm_solver_1.0.2", "mm_solver_1.0.3", "mm_solver_1.0.4"],
+    "using": [
+        "mm_solver_minimal_1.0.1",
+        "mm_solver_1.0.1",
+        "mm_solver_1.0.2",
+        "mm_solver_1.0.3",
+        "mm_solver_1.0.4",
+        "mm_solver_1.0.5"
+    ],
     "patents": {
         "status": "licence-required",
         "note": "BPG is HEVC intra coding",
